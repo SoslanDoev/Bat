@@ -10,6 +10,15 @@ cd %appdata%
 mkdir RedaktorReestra
 cd RedaktorReestra
 if not exist "*.txt" (type nul > num.txt) 
+if not exist "*.sh" (
+(
+echo git init
+echo git add .
+echo git commit -m "first commit"
+echo git branch -M main
+echo git remote add origin https://github.com/USERNAME/REPOSITORIES
+echo git push -u origin main)>>git.sh
+)
 mkdir ObMenu
 mkdir RaskrMenu
 cd RaskrMenu
@@ -48,7 +57,7 @@ if %errorlevel%==6 (exit)
 :a8
 %color%
 cls
-title Редактор Реестра %tim%
+title Цвета %tim%
 echo 1)Черно-серый
 echo 2)Черно-зеленый 
 echo 3)Черно-лиловый
@@ -140,7 +149,7 @@ goto a8
 :a7
 %color%
 cls
-title Редактор Реестра %tim%
+title Разное %tim%
 echo 1)Открыть редактор реестра
 echo 2)Отобразить все файлы в обычном меню 
 echo 3)Отобразить все файлы в раскрывающимся меню
@@ -173,7 +182,7 @@ goto menu
 :a1
 %color%
 cls
-title Редактор Реестра %tim%
+title Создание обычного меню %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
@@ -181,16 +190,207 @@ cd RedaktorReestra\ObMenu
 dir /b
 echo ------------------------------------------------------------
 echo 1)Создать обычное меню
-echo 2)Вернуться в меню
-echo 3)Выход
-choice /c "123" /N>nul
+echo 2)Готовые
+echo 3)Вернуться в меню
+echo 4)Выход
+choice /c "1234" /N>nul
 if %errorlevel%==1 (goto uy1)
-if %errorlevel%==2 (goto menu)
-if %errorlevel%==3 (exit)
+if %errorlevel%==2 (goto uy2)
+if %errorlevel%==3 (goto menu)
+if %errorlevel%==4 (exit)
+:uy2
+cls
+echo 1)Корзина
+echo 2)Выключить компьютер
+echo 3)Перезагрузка
+echo 4)Проводник
+echo 5)Программы
+echo 6)Редактор реестра
+echo 7)Калибровка цветов экрана
+echo 8)Настройка мыши
+echo 9)Вернуться назад
+choice /c "123456789" /N>nul
+if %errorlevel%==1 (goto qq1)
+if %errorlevel%==2 (goto qq2)
+if %errorlevel%==3 (goto qq3)
+if %errorlevel%==4 (goto qq4)
+if %errorlevel%==5 (goto qq5)
+if %errorlevel%==6 (goto qq6)
+if %errorlevel%==7 (goto qq7)
+if %errorlevel%==8 (goto qq8)
+if %errorlevel%==9 (goto a1)
+:qq1
+title Корзина %tim%
+set name1=Корзина
+set name2=Введите расположение иконки: none
+set /p name3=Введите позицию(Top; Bottom): 
+set name4=Корзина
+set name5=explorer shell:RecycleBinFolder
+rem ДОБАВИТЬ ИКОНКУ КОРЗИНЫ
+reg add "hkcr\directory\background\shell\\"%name1%"" /v "Icon" /t reg_sz /d "%name2%" /f
+reg add "hkcr\directory\background\shell\\"%name1%"" /v "Position" /t reg_sz /d "%name3%" /f
+reg add "hkcr\directory\background\shell\\"%name1%"" /v "MUIVerb" /t reg_sz /d "%name4%" /f
+reg add "hkcr\directory\background\shell\\"%name1%"\Command" /t reg_sz /d "%name5%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name1%
+echo %name2%
+echo %name3%
+echo %name4%
+)>>%name1%.reg
+goto uy2
+:qq2
+title Выключение %tim%
+set name11=Выключить
+set name22=Введите расположение иконки: none
+set /p name33=Введите позицию(Top; Bottom): 
+set name44=Выключить
+set name55=Shutdown /s /t 1 /f
+rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
+reg add "hkcr\directory\background\shell\\"%name11%"" /v "Icon" /t reg_sz /d "%name22%" /f
+reg add "hkcr\directory\background\shell\\"%name11%"" /v "Position" /t reg_sz /d "%name33%" /f
+reg add "hkcr\directory\background\shell\\"%name11%"" /v "MUIVerb" /t reg_sz /d "%name44%" /f
+reg add "hkcr\directory\background\shell\\"%name11%"\Command" /t reg_sz /d "%name55%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name11%
+echo %name22%
+echo %name33%
+echo %name44%
+)>>%name11%.reg
+goto uy2
+:qq3
+title Перезагрузка %tim%
+set name111=Перезагрузка
+set name222=Введите расположение иконки: none
+set /p name333=Введите позицию(Top; Bottom): 
+set name444=Перезагрузка
+set name555=Shutdown /r /t 1 /f
+rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
+reg add "hkcr\directory\background\shell\\"%name111%"" /v "Icon" /t reg_sz /d "%name222%" /f
+reg add "hkcr\directory\background\shell\\"%name111%"" /v "Position" /t reg_sz /d "%name333%" /f
+reg add "hkcr\directory\background\shell\\"%name111%"" /v "MUIVerb" /t reg_sz /d "%name444%" /f
+reg add "hkcr\directory\background\shell\\"%name111%"\Command" /t reg_sz /d "%name555%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name111%
+echo %name222%
+echo %name333%
+echo %name444%
+)>>%name111%.reg
+goto uy2
+:qq4
+title Проводник %tim%
+set name1111=Проводник
+set name2222=Введите расположение иконки: none
+set /p name3333=Введите позицию(Top; Bottom): 
+set name4444=Проводник
+set name5555=Explorer
+rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
+reg add "hkcr\directory\background\shell\\"%name1111%"" /v "Icon" /t reg_sz /d "%name2222%" /f
+reg add "hkcr\directory\background\shell\\"%name1111%"" /v "Position" /t reg_sz /d "%name3333%" /f
+reg add "hkcr\directory\background\shell\\"%name1111%"" /v "MUIVerb" /t reg_sz /d "%name4444%" /f
+reg add "hkcr\directory\background\shell\\"%name1111%"\Command" /t reg_sz /d "%name5555%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name1111%
+echo %name2222%
+echo %name3333%
+echo %name4444%
+)>>%name1111%.reg
+goto uy2
+:qq5
+title Программы %tim%
+set name11111=Программы
+set name22222=Введите расположение иконки: none
+set /p name33333=Введите позицию(Top; Bottom): 
+set name44444=Программы
+set name55555=appwiz.cpl
+rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
+reg add "hkcr\directory\background\shell\\"%name11111%"" /v "Icon" /t reg_sz /d "%name22222%" /f
+reg add "hkcr\directory\background\shell\\"%name11111%"" /v "Position" /t reg_sz /d "%name33333%" /f
+reg add "hkcr\directory\background\shell\\"%name11111%"" /v "MUIVerb" /t reg_sz /d "%name44444%" /f
+reg add "hkcr\directory\background\shell\\"%name11111%"\Command" /t reg_sz /d "%name55555%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name11111%
+echo %name22222%
+echo %name33333%
+echo %name44444%
+)>>%name11111%.reg
+goto uy2
+:qq6
+title Реестр %tim%
+set name111111=РедакторРеестра
+set name222222=Введите расположение иконки: none
+set /p name333333=Введите позицию(Top; Bottom): 
+set name444444=Реестр
+set name555555=regedit
+rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
+reg add "hkcr\directory\background\shell\\"%name111111%"" /v "Icon" /t reg_sz /d "%name222222%" /f
+reg add "hkcr\directory\background\shell\\"%name111111%"" /v "Position" /t reg_sz /d "%name333333%" /f
+reg add "hkcr\directory\background\shell\\"%name111111%"" /v "MUIVerb" /t reg_sz /d "%name444444%" /f
+reg add "hkcr\directory\background\shell\\"%name111111%"\Command" /t reg_sz /d "%name555555%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name111111%
+echo %name222222%
+echo %name333333%
+echo %name444444%
+)>>%name111111%.reg
+goto uy2
+:qq7
+title Яркость %tim%
+set name1111111=Дисплей
+set name2222222=Введите расположение иконки: none
+set /p name3333333=Введите позицию(Top; Bottom): 
+set name4444444=Цвета
+set name5555555=dccw
+rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
+reg add "hkcr\directory\background\shell\\"%name1111111%"" /v "Icon" /t reg_sz /d "%name2222222%" /f
+reg add "hkcr\directory\background\shell\\"%name1111111%"" /v "Position" /t reg_sz /d "%name3333333%" /f
+reg add "hkcr\directory\background\shell\\"%name1111111%"" /v "MUIVerb" /t reg_sz /d "%name4444444%" /f
+reg add "hkcr\directory\background\shell\\"%name1111111%"\Command" /t reg_sz /d "%name5555555%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name1111111%
+echo %name2222222%
+echo %name3333333%
+echo %name4444444%
+)>>%name1111111%.reg
+goto uy2
+:qq8
+title Настройка мыши %tim%
+set name11111111=НастройкаМыши
+set name22222222=Введите расположение иконки: none
+set /p name33333333=Введите позицию(Top; Bottom): 
+set name44444444=Мышь
+set name55555555=control mouse
+rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
+reg add "hkcr\directory\background\shell\\"%name11111111%"" /v "Icon" /t reg_sz /d "%name22222222%" /f
+reg add "hkcr\directory\background\shell\\"%name11111111%"" /v "Position" /t reg_sz /d "%name33333333%" /f
+reg add "hkcr\directory\background\shell\\"%name11111111%"" /v "MUIVerb" /t reg_sz /d "%name44444444%" /f
+reg add "hkcr\directory\background\shell\\"%name11111111%"\Command" /t reg_sz /d "%name55555555%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name11111111%
+echo %name22222222%
+echo %name33333333%
+echo %name44444444%
+)>>%name11111111%.reg
+goto uy2
 :uy1
 %color%
 cls
-title Редактор Реестра %tim%
+title Создание обычного меню %tim%
 echo ------------------------------------------------------------
 set /p name1=Введите название раздела: 
 set /p name2=Введите расположение иконки: 
@@ -214,6 +414,7 @@ cd RedaktorReestra\ObMenu
 echo %rfq1%
 echo %rfq2%
 echo %rfq3%
+echo %rfq4%
 )>>%name1%.reg
 set cn=
 :adver
@@ -223,7 +424,7 @@ goto a1
 :a2 
 %color%
 cls
-title Редактор Реестра %tim%
+title Раскрывающееся меню %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
@@ -243,11 +444,11 @@ choice /c "1234" /N>nul
 if %errorlevel%==1 (goto b1)
 if %errorlevel%==2 (goto b2)
 if %errorlevel%==3 (goto menu)
-if %errorlevel%==4 (Выход)
+if %errorlevel%==4 (exit)
 :a3
 color 0c
 cls 
-title Редактор Реестра %tim%
+title Удаление %tim%
 echo 1)Удалить обычное меню
 echo 2)Удалить раскрывающиеся меню
 echo 3)Вернуться назад
@@ -260,7 +461,7 @@ if %errorlevel%==4 (exit)
 :d1
 color 0c
 cls
-title Редактор Реестра %tim%
+title Удаление %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
@@ -274,7 +475,7 @@ del %f1%.reg
 goto a3
 :d2
 cls 
-title Редактор Реестра %tim%
+title Удаление %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
@@ -298,7 +499,7 @@ if %errorlevel%==4 (exit)
 :y1
 %color%
 cls
-title Редактор Реестра %tim%
+title Удаление %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
@@ -312,7 +513,7 @@ del %f2%.reg
 goto d2
 :y2
 cls
-title Редактор Реестра %tim%
+title Удаление %tim%
 echo 			Раздел
 echo ------------------------------------------------------------
 cd %appdata%
@@ -326,7 +527,7 @@ goto d2
 :b1
 %color%
 cls 
-title Редактор Реестра %tim%
+title Создание команды %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%		
@@ -363,7 +564,7 @@ goto a2
 :b2
 %color%
 cls
-title Редактор Реестра %tim%
+title Создание раздела %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%		
@@ -409,7 +610,7 @@ goto a2
 :a93
 %color%
 cls
-title Редактор Реестра %tim%
+title Просто %tim%
 echo   _________   ______     ________   ___       ___  
 echo  (_   _____) (   __ \   (___  ___) (  (       )  ) 
 echo    ) (___     ) (__) )      ) )     \  \  _  /  /  
