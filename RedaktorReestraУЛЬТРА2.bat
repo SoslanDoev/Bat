@@ -200,16 +200,24 @@ if %errorlevel%==3 (goto menu)
 if %errorlevel%==4 (exit)
 :uy2
 cls
-echo 1)Корзина
-echo 2)Выключить компьютер
-echo 3)Перезагрузка
-echo 4)Проводник
-echo 5)Программы
-echo 6)Редактор реестра
-echo 7)Калибровка цветов экрана
-echo 8)Настройка мыши
-echo 9)Вернуться назад
-choice /c "123456789" /N>nul
+title Готовые %tim%
+echo (1)Корзина (2)ВыключитьКомпьютер (3)Перезагрузка
+echo (4)Проводник (5)УстановкаИУдалениеПрограмм
+echo (6)РедакторРеестра (7)КалибровкаЦветовЭкрана (8)СвойстваМыши
+echo (9)СвойстваЗвука (q)ПанельУправления (w)СвойстваПапок
+echo (e)Персонализация (r)Шрифты (t)СвойстваКлавиатуры
+echo (y)ПланировщикЗаданий (u)УстройстваИПринтеры
+echo (i)Администрирование (p)ИгровыеУстройства
+echo (a)СвойстваЭкрана (s)СвойстваСистемы (d)СетевыеПодключения
+echo (f)УчетныеЗаписиПользователей (g)СведенияОСистеме
+echo (h)АвтоматическоеОбновление (j)ДатаИВремя
+echo (k)УправлениеЭлектропитанием (l)ЯзыкИРегиональныеВозможности
+echo (z)СистемныйМонитор (x)Paint (c)ЦентрОбеспеченияБезопасности
+echo (v)КоманднаяСтрока (b)ВыйтиИзУчетнойЗаписиПользователя 
+echo (n)ДефрагментацияДисков (m)ОКомпьютере (9)ВернутьсяНазад
+echo 			(0)Выход
+choice /c "123456789QWER" /N>nul
+if %errorlevel%==0 (exit)
 if %errorlevel%==1 (goto qq1)
 if %errorlevel%==2 (goto qq2)
 if %errorlevel%==3 (goto qq3)
@@ -218,7 +226,76 @@ if %errorlevel%==5 (goto qq5)
 if %errorlevel%==6 (goto qq6)
 if %errorlevel%==7 (goto qq7)
 if %errorlevel%==8 (goto qq8)
-if %errorlevel%==9 (goto a1)
+if %errorlevel%==Q (goto qq9)
+if %errorlevel%==W (goto ww9)
+if %errorlevel%==E (goto ee9)
+if %errorlevel%==R (goto rr9)
+if %errorlevel%==9(goto a1)
+
+rem ВКЛЮЧАЕТ ТОЛЬКО ШРИФТЫ
+:ee9
+title Шрифты %tim%
+set name1e=Шрифты
+set name2e=Введите расположение иконки: none
+set /p name3e=Введите позицию(Top; Bottom): 
+set name4e=Шрифты
+set name5e=control fonts
+rem ДОБАВИТЬ ИКОНКУ
+reg add "hkcr\directory\background\shell\\"%name1e%"" /v "Icon" /t reg_sz /d "%name2e%" /f
+reg add "hkcr\directory\background\shell\\"%name1e%"" /v "Position" /t reg_sz /d "%name3e%" /f
+reg add "hkcr\directory\background\shell\\"%name1e%"" /v "MUIVerb" /t reg_sz /d "%name4e%" /f
+reg add "hkcr\directory\background\shell\\"%name1e%"\Command" /t reg_sz /d "%name5e%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name1e%
+echo %name2e%
+echo %name3e%
+echo %name4e%
+)>>%name1e%.reg
+goto uy2
+:ww9
+title Свойства папок %tim%
+set name1w=СвойстваПапок
+set name2w=Введите расположение иконки: none
+set /p name3w=Введите позицию(Top; Bottom): 
+set name4w=СвойстваПапок
+set name5w=control folders
+rem ДОБАВИТЬ ИКОНКУ
+reg add "hkcr\directory\background\shell\\"%name1w%"" /v "Icon" /t reg_sz /d "%name2w%" /f
+reg add "hkcr\directory\background\shell\\"%name1w%"" /v "Position" /t reg_sz /d "%name3w%" /f
+reg add "hkcr\directory\background\shell\\"%name1w%"" /v "MUIVerb" /t reg_sz /d "%name4w%" /f
+reg add "hkcr\directory\background\shell\\"%name1w%"\Command" /t reg_sz /d "%name5w%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name1w%
+echo %name2w%
+echo %name3w%
+echo %name4w%
+)>>%name1w%.reg
+goto uy2
+:qq9
+title Панель управления %tim%
+set name1q=ПанельУправления
+set name2q=Введите расположение иконки: none
+set /p name3q=Введите позицию(Top; Bottom): 
+set name4q=ПанельУправления
+set name5q=сontrol
+rem ДОБАВИТЬ ИКОНКУ
+reg add "hkcr\directory\background\shell\\"%name1q%"" /v "Icon" /t reg_sz /d "%name2q%" /f
+reg add "hkcr\directory\background\shell\\"%name1q%"" /v "Position" /t reg_sz /d "%name3q%" /f
+reg add "hkcr\directory\background\shell\\"%name1q%"" /v "MUIVerb" /t reg_sz /d "%name4q%" /f
+reg add "hkcr\directory\background\shell\\"%name1q%"\Command" /t reg_sz /d "%name5q%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %name1q%
+echo %name2q%
+echo %name3q%
+echo %name4q%
+)>>%name1q%.reg
+goto uy2
 :qq1
 title Корзина %tim%
 set name1=Корзина
@@ -451,13 +528,18 @@ cls
 title Удаление %tim%
 echo 1)Удалить обычное меню
 echo 2)Удалить раскрывающиеся меню
-echo 3)Вернуться назад
-echo 4)Выход
+echo 3)Помощь
+echo 4)Вернуться назад
+echo 5)Выход
 choice /c "1234" /N>nul
 if %errorlevel%==1 (goto d1)
 if %errorlevel%==2 (goto d2)
-if %errorlevel%==3 (goto menu)
-if %errorlevel%==4 (exit)
+if %errorlevel%==3 (goto d3)
+if %errorlevel%==4 (goto menu)
+if %errorlevel%==5 (exit)
+:d3
+echo Чтобы удалить несколько файлов поставьте ";"
+goto a3
 :d1
 color 0c
 cls
