@@ -520,7 +520,8 @@ if %errorlevel%==3 (goto d3)
 if %errorlevel%==4 (goto menu)
 if %errorlevel%==5 (exit)
 :d3
-echo Чтобы удалить несколько файлов поставьте ";"
+echo Ничего
+pause
 goto a3
 :d1
 color 0c
