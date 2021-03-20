@@ -187,7 +187,8 @@ echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\ObMenu
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\ObMenu\*.reg") do echo.%%~na
 echo ------------------------------------------------------------
 echo 1)Создать обычное меню
 echo 2)Готовые
@@ -200,6 +201,7 @@ if %errorlevel%==3 (goto menu)
 if %errorlevel%==4 (exit)
 :uy2
 cls
+set m=
 title Готовые %tim%
 mode con: cols=100 lines=30
 echo (1)ВыключитьКомпьютер I (2)Корзина                     I  (3)Перезагрузка
@@ -215,17 +217,19 @@ echo (n)КоманднаяСтрока    I (o)ЦентрОбеспеченияБезопасностиI  (p)Paint
 echo (q)Дефрагментация     I (r)ВыйтиИзУчетнойЗаписи        I  (s)ОКомпьютере
 echo             (9)ВернутьсяНазад	                (0)Выход
 rem choice /c "123456789ABCDEFGHIJKLMNOPQRS" /N>nul
-choice /c "123456789" /N>nul
-
-if %errorlevel%==1 (goto kor)
-if %errorlevel%==2 (goto vkl)
-if %errorlevel%==3 (goto lkv)
-if %errorlevel%==4 (goto prov)
-if %errorlevel%==5 (goto prog)
-if %errorlevel%==6 (goto reg)
-if %errorlevel%==7 (goto mis)
-if %errorlevel%==8 (goto calcoec)
-if %errorlevel%==9 (goto menu)
+rem choice /c "123456789a" /N>nul
+set /p bwrq=Введите: 
+if %bwrq%==1 (goto kor)
+if %bwrq%==2 (goto vkl)
+if %bwrq%==3 (goto lkv)
+if %bwrq%==4 (goto prov)
+if %bwrq%==5 (goto prog)
+if %bwrq%==6 (goto reg)
+if %bwrq%==7 (goto mis)
+if %bwrq%==8 (goto calcoec)
+if %bwrq%==9 (goto menu)
+if %bwrq%==a (goto pan)
+if %bwrq%==b (goto sv)
 
 :kor 
 title Корзина %tim%
@@ -395,8 +399,48 @@ echo %calcoec3%
 echo %calcoec4%
 )>>%calcoec%.reg
 goto uy2
-
-
+:pan
+title Панель Управления %tim%
+set pan=ПанельУправления
+set pan2=Введите расположение иконки: none
+set /p pan3=Введите позицию(Top; Bottom): 
+set pan4=ПанельУправления
+set pan5=control
+rem ДОБАВИТЬ ИКОНКУ
+reg add "hkcr\directory\background\shell\\"%pan%"" /v "Icon" /t reg_sz /d "%pan2%" /f
+reg add "hkcr\directory\background\shell\\"%pan%"" /v "Position" /t reg_sz /d "%pan3%" /f
+reg add "hkcr\directory\background\shell\\"%pan%"" /v "MUIVerb" /t reg_sz /d "%pan4%" /f
+reg add "hkcr\directory\background\shell\\"%pan%"\Command" /t reg_sz /d "%pan5%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %pan%
+echo %pan2%
+echo %pan3%
+echo %pan4%
+)>>%pan%.reg
+goto uy2
+:sv
+title Свойства папок %tim%
+set sv=СвойстваПапок
+set sv2=Введите расположение иконки: none
+set /p sv3=Введите позицию(Top; Bottom): 
+set sv4=СвойстваПапок
+set sv5=control folders
+rem ДОБАВИТЬ ИКОНКУ
+reg add "hkcr\directory\background\shell\\"%sv%"" /v "Icon" /t reg_sz /d "%sv2%" /f
+reg add "hkcr\directory\background\shell\\"%sv%"" /v "Position" /t reg_sz /d "%sv3%" /f
+reg add "hkcr\directory\background\shell\\"%sv%"" /v "MUIVerb" /t reg_sz /d "%sv4%" /f
+reg add "hkcr\directory\background\shell\\"%sv%"\Command" /t reg_sz /d "%sv5%" /f
+cd %appdata%
+cd RedaktorReestra\ObMenu
+(
+echo %sv%
+echo %sv2%
+echo %sv3%
+echo %sv4%
+)>>%sv%.reg
+goto uy2
 
 :uy1
 %color%
@@ -408,11 +452,12 @@ set /p name2=Введите расположение иконки:
 set /p name3=Введите позицию(Top; Bottom): 
 set /p name4=Введите название: 
 set /p name5=Введите Команду:
+set name6=explorer %name5%
 echo ------------------------------------------------------------
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "Icon" /t reg_sz /d "%name2%"
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "Position" /t reg_sz /d "%name3%"
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "MUIVerb" /t reg_sz /d "%name4%"
-reg add "hkcr\directory\background\shell\\"%name1%"\Command" /t reg_sz /d "%name5%"
+reg add "hkcr\directory\background\shell\\"%name1%"\Command" /t reg_sz /d "%name6%"
 ::====================================================================================================
 set rfq1=reg add "hkcr\directory\background\shell\\"%name1%"" /v "Icon" /t reg_sz /d "%name2%"
 set rfq2=reg add "hkcr\directory\background\shell\\"%name1%"" /v "Position" /t reg_sz /d "%name3%"
@@ -425,6 +470,7 @@ cd RedaktorReestra\ObMenu
 echo %rfq1%
 echo %rfq2%
 echo %rfq3%
+echo %rfq4%
 echo %rfq4%
 )>>%name1%.reg
 set cn=
@@ -440,12 +486,14 @@ echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\RaskrMenu\Command
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
 echo 			Раздел
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\RaskrMenu\Razdel
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Razdel\*.reg") do echo.%%~na
 echo ------------------------------------------------------------
 echo 1)Создать команду
 echo 2)Создать раздел
@@ -482,7 +530,8 @@ echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\ObMenu
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\ObMenu\*.reg") do echo.%%~na
 echo ------------------------------------------------------------
 ::reg query hkcr\directory\background\shell\
 set /p f1=Введите название раздела: 
@@ -491,17 +540,20 @@ del %f1%.reg
 goto a3
 :d2
 cls 
+color 0c
 title Удаление %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\RaskrMenu\Command
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
 echo 			Раздел
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\RaskrMenu\Razdel
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Razdel\*.reg") do echo.%%~na
 echo ------------------------------------------------------------
 echo 1)Удалить команду
 echo 2)Удалить раздел
@@ -513,14 +565,15 @@ if %errorlevel%==2 (goto y2)
 if %errorlevel%==3 (goto a3)
 if %errorlevel%==4 (exit)
 :y1
-%color%
+color 0c
 cls
 title Удаление %tim%
 echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\RaskrMenu\Command
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
 echo ------------------------------------------------------------
 ::reg query hklm\software\microsoft\windows\currentversion\explorer\commandstore\shell
 set /p f2=Введите название раздела: 
@@ -529,12 +582,14 @@ del %f2%.reg
 goto d2
 :y2
 cls
+color 0c
 title Удаление %tim%
 echo 			Раздел
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\RaskrMenu\Razdel
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Razdel\*.reg") do echo.%%~na
 echo ------------------------------------------------------------
 set /p f2=Введите название раздела: 
 reg delete "hkcr\directory\background\shell\\"%f2%"" /f
@@ -546,18 +601,20 @@ cls
 title Создание команды %tim%
 echo 			Меню
 echo ------------------------------------------------------------
-cd %appdata%		
+cd %appdata%
 cd RedaktorReestra\RaskrMenu\Command
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
 echo ------------------------------------------------------------
 set /p name0=Введите имя раздела: 
 set /p name01=Введите расположение иконки: 
 set /p name02=Введите название команды: 
-set /p name03=Введите команду: 
+set /p name03=Введите команду:
+set name04=explorer %name03% 
 echo ------------------------------------------------------------
 reg add "hklm\software\microsoft\windows\currentversion\explorer\commandstore\shell\\"%name0%"" /v "Icon" /t reg_sz /d "%name01%"
 reg add "hklm\software\microsoft\windows\currentversion\explorer\commandstore\shell\\"%name0%"" /v "MUIVerb" /t reg_sz /d "%name02%"
-reg add "hklm\software\microsoft\windows\currentversion\explorer\commandstore\shell\\"%name0%"\Command" /t reg_sz /d "%name03%"
+reg add "hklm\software\microsoft\windows\currentversion\explorer\commandstore\shell\\"%name0%"\Command" /t reg_sz /d "%name04%"
 ::====================================================================================================
 set eman1=reg add "hklm\software\microsoft\windows\currentversion\explorer\commandstore\shell\\"%name0%"" /v "Icon" /t reg_sz /d "%name01%"
 set eman2=reg add "hklm\software\microsoft\windows\currentversion\explorer\commandstore\shell\\"%name0%"" /v "MUIVerb" /t reg_sz /d "%name02%"
@@ -583,14 +640,12 @@ cls
 title Создание раздела %tim%
 echo 			Меню
 echo ------------------------------------------------------------
-cd %appdata%		
-cd RedaktorReestra\RaskrMenu\Command
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
 echo 			Раздел
 echo ------------------------------------------------------------
-cd %appdata%
-cd RedaktorReestra\RaskrMenu\Razdel
-dir /b
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Razdel\*.reg") do echo.%%~na
 echo ------------------------------------------------------------
 set /p name1=Введите название раздела: 
 set /p name2=Введите расположение иконки: 
