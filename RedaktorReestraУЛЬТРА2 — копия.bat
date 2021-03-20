@@ -246,8 +246,9 @@ echo %kor%
 echo %kor2%
 echo %kor3%
 echo %kor4%
-)>>%kor%.reg
+)>>%kor1%.reg
 goto uy2
+
 :vkl
 title Выключение %tim%
 set vkl=Выключение
@@ -267,8 +268,9 @@ echo %vkl%
 echo %vkl2%
 echo %vkl3%
 echo %vkl4%
-)>>%vkl%.reg
+)>>%vkl1%.reg
 goto uy2
+
 :lkv
 title Перезагрузка %tim%
 set lkv=Перезагрузка
@@ -288,8 +290,9 @@ echo %lkv%
 echo %lkv2%
 echo %lkv3%
 echo %lkv4%
-)>>%lkv%.reg
+)>>%lkv1%.reg
 goto uy2
+
 :prov
 title Проводник %tim%
 set prov=Проводник
@@ -309,8 +312,9 @@ echo %prov%
 echo %prov2%
 echo %prov3%
 echo %prov4%
-)>>%prov%.reg
+)>>%prov1%.reg
 goto uy2
+
 :prog
 title Установка и удаление программ %tim%
 set prog=Программы
@@ -330,8 +334,9 @@ echo %prog%
 echo %prog2%
 echo %prog3%
 echo %prog4%
-)>>%prog%.reg
+)>>%prog1%.reg
 goto uy2
+
 :reg
 title Редактор Реестра %tim%
 set reg=РедакторРеестра
@@ -351,8 +356,9 @@ echo %reg%
 echo %reg2%
 echo %reg3%
 echo %reg4%
-)>>%reg%.reg
+)>>%reg1%.reg
 goto uy2
+
 :mis
 title Свойства мыши %tim%
 set mis=СвойстваМыши
@@ -372,8 +378,9 @@ echo %mis%
 echo %mis2%
 echo %mis3%
 echo %mis4%
-)>>%mis%.reg
+)>>%mis1%.reg
 goto uy2
+
 :calcoec
 title КалибровкаЦветовЭкрана %tim%
 set calcoec=КалибровкаЦветовЭкрана
@@ -393,10 +400,8 @@ echo %calcoec%
 echo %calcoec2%
 echo %calcoec3%
 echo %calcoec4%
-)>>%calcoec%.reg
+)>>%calcoec1%.reg
 goto uy2
-
-
 
 :uy1
 %color%

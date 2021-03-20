@@ -1,1 +1,0 @@
-explorer C:\Users\sosla\AppData\Local\Discord\app-0.0.308\Discord.exe
