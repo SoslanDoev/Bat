@@ -201,269 +201,30 @@ if %errorlevel%==4 (exit)
 :uy2
 cls
 title Готовые %tim%
-echo (1)Корзина (2)ВыключитьКомпьютер (3)Перезагрузка
-echo (4)Проводник (5)УстановкаИУдалениеПрограмм
-echo (6)РедакторРеестра (7)КалибровкаЦветовЭкрана (8)СвойстваМыши
-echo (9)СвойстваЗвука (q)ПанельУправления (w)СвойстваПапок
-echo (e)Персонализация (r)Шрифты (t)СвойстваКлавиатуры
-echo (y)ПланировщикЗаданий (u)УстройстваИПринтеры
-echo (i)Администрирование (p)ИгровыеУстройства
-echo (a)СвойстваЭкрана (s)СвойстваСистемы (d)СетевыеПодключения
-echo (f)УчетныеЗаписиПользователей (g)СведенияОСистеме
-echo (h)АвтоматическоеОбновление (j)ДатаИВремя
-echo (k)УправлениеЭлектропитанием (l)ЯзыкИРегиональныеВозможности
-echo (z)СистемныйМонитор (x)Paint (c)ЦентрОбеспеченияБезопасности
-echo (v)КоманднаяСтрока (b)ВыйтиИзУчетнойЗаписиПользователя 
-echo (n)ДефрагментацияДисков (m)ОКомпьютере (9)ВернутьсяНазад
-echo 			(0)Выход
-choice /c "123456789QWER" /N>nul
+mode con: cols=100 lines=30
+echo (1)Корзина            ! (2)ВыключитьКомпьютер          !  (3)Перезагрузка
+echo (4)Проводник          ! (5)УстановкаИУдалениеПрограмм  !  (6)РедакторРеестра
+echo (7)СвойстваМыши       ! (8)КалибровкаЦветовЭкрана      !  (9)СвойстваЗвука
+echo (a)ПанельУправления   ! (b)СвойстваПапок               !  (c)Персонализация
+echo (d)Шрифты             ! (e)СвойстваКлавиатуры          !  (f)ИгровыеУстройства
+echo (y)ПланировщикЗаданий ! (u)УстройстваИПринтеры         !  (f)УчетныеЗаписиПользователей
+echo (i)Администрирование  ! (s)СвойстваСистемы             !  (g)СведенияОСистеме
+echo (h)СвойстваЭкрана     ! (i)СетевыеПодключения          !  (j)ДатаВремя
+echo (k)СистемныйМонитор   ! (l)УправлениеЭлектропитанием   !  (m)Язык
+echo (n)КоманднаяСтрока    ! (o)ЦентрОбеспеченияБезопасности!  (p)Paint
+echo (q)Дефрагментация     ! (r)ВыйтиИзУчетнойЗаписи        !  (s)ОКомпьютере
+echo             (9)ВернутьсяНазад	                (0)Выход
+rem choice /c "0123456789ABCDEFGHIJKLMNOPQRS" /N>nul
+choice /c "09" /N>nul
 if %errorlevel%==0 (exit)
-if %errorlevel%==1 (goto qq1)
-if %errorlevel%==2 (goto qq2)
-if %errorlevel%==3 (goto qq3)
-if %errorlevel%==4 (goto qq4)
-if %errorlevel%==5 (goto qq5)
-if %errorlevel%==6 (goto qq6)
-if %errorlevel%==7 (goto qq7)
-if %errorlevel%==8 (goto qq8)
-if %errorlevel%==Q (goto qq9)
-if %errorlevel%==W (goto ww9)
-if %errorlevel%==E (goto ee9)
-if %errorlevel%==R (goto rr9)
-if %errorlevel%==9(goto a1)
+if %errorlevel%==9 (pause)
 
-rem ВКЛЮЧАЕТ ТОЛЬКО ШРИФТЫ
-:ee9
-title Шрифты %tim%
-set name1e=Шрифты
-set name2e=Введите расположение иконки: none
-set /p name3e=Введите позицию(Top; Bottom): 
-set name4e=Шрифты
-set name5e=control fonts
-rem ДОБАВИТЬ ИКОНКУ
-reg add "hkcr\directory\background\shell\\"%name1e%"" /v "Icon" /t reg_sz /d "%name2e%" /f
-reg add "hkcr\directory\background\shell\\"%name1e%"" /v "Position" /t reg_sz /d "%name3e%" /f
-reg add "hkcr\directory\background\shell\\"%name1e%"" /v "MUIVerb" /t reg_sz /d "%name4e%" /f
-reg add "hkcr\directory\background\shell\\"%name1e%"\Command" /t reg_sz /d "%name5e%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name1e%
-echo %name2e%
-echo %name3e%
-echo %name4e%
-)>>%name1e%.reg
-goto uy2
-:ww9
-title Свойства папок %tim%
-set name1w=СвойстваПапок
-set name2w=Введите расположение иконки: none
-set /p name3w=Введите позицию(Top; Bottom): 
-set name4w=СвойстваПапок
-set name5w=control folders
-rem ДОБАВИТЬ ИКОНКУ
-reg add "hkcr\directory\background\shell\\"%name1w%"" /v "Icon" /t reg_sz /d "%name2w%" /f
-reg add "hkcr\directory\background\shell\\"%name1w%"" /v "Position" /t reg_sz /d "%name3w%" /f
-reg add "hkcr\directory\background\shell\\"%name1w%"" /v "MUIVerb" /t reg_sz /d "%name4w%" /f
-reg add "hkcr\directory\background\shell\\"%name1w%"\Command" /t reg_sz /d "%name5w%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name1w%
-echo %name2w%
-echo %name3w%
-echo %name4w%
-)>>%name1w%.reg
-goto uy2
-:qq9
-title Панель управления %tim%
-set name1q=ПанельУправления
-set name2q=Введите расположение иконки: none
-set /p name3q=Введите позицию(Top; Bottom): 
-set name4q=ПанельУправления
-set name5q=сontrol
-rem ДОБАВИТЬ ИКОНКУ
-reg add "hkcr\directory\background\shell\\"%name1q%"" /v "Icon" /t reg_sz /d "%name2q%" /f
-reg add "hkcr\directory\background\shell\\"%name1q%"" /v "Position" /t reg_sz /d "%name3q%" /f
-reg add "hkcr\directory\background\shell\\"%name1q%"" /v "MUIVerb" /t reg_sz /d "%name4q%" /f
-reg add "hkcr\directory\background\shell\\"%name1q%"\Command" /t reg_sz /d "%name5q%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name1q%
-echo %name2q%
-echo %name3q%
-echo %name4q%
-)>>%name1q%.reg
-goto uy2
-:qq1
-title Корзина %tim%
-set name1=Корзина
-set name2=Введите расположение иконки: none
-set /p name3=Введите позицию(Top; Bottom): 
-set name4=Корзина
-set name5=explorer shell:RecycleBinFolder
-rem ДОБАВИТЬ ИКОНКУ КОРЗИНЫ
-reg add "hkcr\directory\background\shell\\"%name1%"" /v "Icon" /t reg_sz /d "%name2%" /f
-reg add "hkcr\directory\background\shell\\"%name1%"" /v "Position" /t reg_sz /d "%name3%" /f
-reg add "hkcr\directory\background\shell\\"%name1%"" /v "MUIVerb" /t reg_sz /d "%name4%" /f
-reg add "hkcr\directory\background\shell\\"%name1%"\Command" /t reg_sz /d "%name5%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name1%
-echo %name2%
-echo %name3%
-echo %name4%
-)>>%name1%.reg
-goto uy2
-:qq2
-title Выключение %tim%
-set name11=Выключить
-set name22=Введите расположение иконки: none
-set /p name33=Введите позицию(Top; Bottom): 
-set name44=Выключить
-set name55=Shutdown /s /t 1 /f
-rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
-reg add "hkcr\directory\background\shell\\"%name11%"" /v "Icon" /t reg_sz /d "%name22%" /f
-reg add "hkcr\directory\background\shell\\"%name11%"" /v "Position" /t reg_sz /d "%name33%" /f
-reg add "hkcr\directory\background\shell\\"%name11%"" /v "MUIVerb" /t reg_sz /d "%name44%" /f
-reg add "hkcr\directory\background\shell\\"%name11%"\Command" /t reg_sz /d "%name55%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name11%
-echo %name22%
-echo %name33%
-echo %name44%
-)>>%name11%.reg
-goto uy2
-:qq3
-title Перезагрузка %tim%
-set name111=Перезагрузка
-set name222=Введите расположение иконки: none
-set /p name333=Введите позицию(Top; Bottom): 
-set name444=Перезагрузка
-set name555=Shutdown /r /t 1 /f
-rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
-reg add "hkcr\directory\background\shell\\"%name111%"" /v "Icon" /t reg_sz /d "%name222%" /f
-reg add "hkcr\directory\background\shell\\"%name111%"" /v "Position" /t reg_sz /d "%name333%" /f
-reg add "hkcr\directory\background\shell\\"%name111%"" /v "MUIVerb" /t reg_sz /d "%name444%" /f
-reg add "hkcr\directory\background\shell\\"%name111%"\Command" /t reg_sz /d "%name555%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name111%
-echo %name222%
-echo %name333%
-echo %name444%
-)>>%name111%.reg
-goto uy2
-:qq4
-title Проводник %tim%
-set name1111=Проводник
-set name2222=Введите расположение иконки: none
-set /p name3333=Введите позицию(Top; Bottom): 
-set name4444=Проводник
-set name5555=Explorer
-rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
-reg add "hkcr\directory\background\shell\\"%name1111%"" /v "Icon" /t reg_sz /d "%name2222%" /f
-reg add "hkcr\directory\background\shell\\"%name1111%"" /v "Position" /t reg_sz /d "%name3333%" /f
-reg add "hkcr\directory\background\shell\\"%name1111%"" /v "MUIVerb" /t reg_sz /d "%name4444%" /f
-reg add "hkcr\directory\background\shell\\"%name1111%"\Command" /t reg_sz /d "%name5555%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name1111%
-echo %name2222%
-echo %name3333%
-echo %name4444%
-)>>%name1111%.reg
-goto uy2
-:qq5
-title Программы %tim%
-set name11111=Программы
-set name22222=Введите расположение иконки: none
-set /p name33333=Введите позицию(Top; Bottom): 
-set name44444=Программы
-set name55555=appwiz.cpl
-rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
-reg add "hkcr\directory\background\shell\\"%name11111%"" /v "Icon" /t reg_sz /d "%name22222%" /f
-reg add "hkcr\directory\background\shell\\"%name11111%"" /v "Position" /t reg_sz /d "%name33333%" /f
-reg add "hkcr\directory\background\shell\\"%name11111%"" /v "MUIVerb" /t reg_sz /d "%name44444%" /f
-reg add "hkcr\directory\background\shell\\"%name11111%"\Command" /t reg_sz /d "%name55555%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name11111%
-echo %name22222%
-echo %name33333%
-echo %name44444%
-)>>%name11111%.reg
-goto uy2
-:qq6
-title Реестр %tim%
-set name111111=РедакторРеестра
-set name222222=Введите расположение иконки: none
-set /p name333333=Введите позицию(Top; Bottom): 
-set name444444=Реестр
-set name555555=regedit
-rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
-reg add "hkcr\directory\background\shell\\"%name111111%"" /v "Icon" /t reg_sz /d "%name222222%" /f
-reg add "hkcr\directory\background\shell\\"%name111111%"" /v "Position" /t reg_sz /d "%name333333%" /f
-reg add "hkcr\directory\background\shell\\"%name111111%"" /v "MUIVerb" /t reg_sz /d "%name444444%" /f
-reg add "hkcr\directory\background\shell\\"%name111111%"\Command" /t reg_sz /d "%name555555%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name111111%
-echo %name222222%
-echo %name333333%
-echo %name444444%
-)>>%name111111%.reg
-goto uy2
-:qq7
-title Яркость %tim%
-set name1111111=Дисплей
-set name2222222=Введите расположение иконки: none
-set /p name3333333=Введите позицию(Top; Bottom): 
-set name4444444=Цвета
-set name5555555=dccw
-rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
-reg add "hkcr\directory\background\shell\\"%name1111111%"" /v "Icon" /t reg_sz /d "%name2222222%" /f
-reg add "hkcr\directory\background\shell\\"%name1111111%"" /v "Position" /t reg_sz /d "%name3333333%" /f
-reg add "hkcr\directory\background\shell\\"%name1111111%"" /v "MUIVerb" /t reg_sz /d "%name4444444%" /f
-reg add "hkcr\directory\background\shell\\"%name1111111%"\Command" /t reg_sz /d "%name5555555%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name1111111%
-echo %name2222222%
-echo %name3333333%
-echo %name4444444%
-)>>%name1111111%.reg
-goto uy2
-:qq8
-title Настройка мыши %tim%
-set name11111111=НастройкаМыши
-set name22222222=Введите расположение иконки: none
-set /p name33333333=Введите позицию(Top; Bottom): 
-set name44444444=Мышь
-set name55555555=control mouse
-rem ДОБАВИТЬ ИКОНКУ ВЫКЛЮЧЕНИЯ
-reg add "hkcr\directory\background\shell\\"%name11111111%"" /v "Icon" /t reg_sz /d "%name22222222%" /f
-reg add "hkcr\directory\background\shell\\"%name11111111%"" /v "Position" /t reg_sz /d "%name33333333%" /f
-reg add "hkcr\directory\background\shell\\"%name11111111%"" /v "MUIVerb" /t reg_sz /d "%name44444444%" /f
-reg add "hkcr\directory\background\shell\\"%name11111111%"\Command" /t reg_sz /d "%name55555555%" /f
-cd %appdata%
-cd RedaktorReestra\ObMenu
-(
-echo %name11111111%
-echo %name22222222%
-echo %name33333333%
-echo %name44444444%
-)>>%name11111111%.reg
-goto uy2
+
+
+
+
+
+
 :uy1
 %color%
 cls
