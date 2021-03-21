@@ -11,22 +11,6 @@ mkdir RedaktorReestra
 cd RedaktorReestra
 if not exist "*.txt" (type nul > num.txt) 
 mkdir PravMenu
-cd PravMenu
-if not exist "*.w" (
-(
-echo Windows Registry Editor Version 5.00
-
-echo [HKEY_CLASSES_ROOT\CLSID\{09A47860-11B0-4DA5-AFA5-26D86198A780}]
-
-echo [HKEY_CLASSES_ROOT\CLSID\{09A47860-11B0-4DA5-AFA5-26D86198A780}\InprocServer32]
-echo @="C:\\Program Files\\Windows Defender\\shellext.dll"
-echo "ThreadingModel"="Apartment"
-
-echo [HKEY_CLASSES_ROOT\CLSID\{09A47860-11B0-4DA5-AFA5-26D86198A780}\Version]
-echo @="10.0.18362.1316"
-)>>WindDef.reg
-)
-cd ..
 mkdir ObMenu
 mkdir RaskrMenu
 cd RaskrMenu
@@ -84,13 +68,17 @@ if %errorlevel%==3 (goto Otpr2)
 if %errorlevel%==4 (goto def)
 if %errorlevel%==5 (goto menu)
 :def 
-set nameewd=WindDef.reg
+set nameewd="09A47860-11B0-4DA5-AFA5-26D86198A780"
 cd %appdata%
 cd RedaktorReestra\PravMenu
-regedit /s WindDef.reg
+reg add "hkcr\CLSID\\"aq"" /t reg_sz /d "{09A47860-11B0-4DA5-AFA5-26D86198A780}" /f
+reg add "hkcr\CLSID\\"aq"\InprocServer32" /t reg_sz /d "Apartment" /f
+reg add "hkcr\CLSID\\"aq"\InprocServer32" /v "ThreadingMode" /t reg_sz /d "C:\Program Files\Windows Defender\shellext.dll" /f
+reg add "hkcr\CLSID\\"aq"\Version" /t reg_sz /d "10.0.18362.1316" /f
 (
 echo %nameewd%
 )>>WindowsDefender.reg
+goto Prav
 :Otpr2
 set nameeqq=ModernSharing2
 reg add "hkcr\AllFilesystemObjects\shellex\ContextMenuHandlers\\"%nameeqq%"" /t reg_sz /d "{7BA4C740-9E81-11CF-99D3-00AA004AE837}" /f
@@ -99,6 +87,7 @@ cd RedaktorReestra\PravMenu
 (
 echo %nameeqq%
 )>>Отправить2.reg
+goto Prav
 :Otpr
 set nameeo=ModernSharing
 reg add "hkcr\*\shellex\ContextMenuHandlers\\"%nameeo%"" /t reg_sz /d "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}" /f
@@ -118,6 +107,24 @@ cd RedaktorReestra\PravMenu
 echo %nameek%
 )>>%nameek%.reg
 goto Prav
+:dte
+
+color 0c
+cls
+title Удаление %tim%
+echo 			Меню
+echo ------------------------------------------------------------
+cd %appdata%
+cd RedaktorReestra\PravMenu
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\PravMenu\*.reg") do echo.%%~na
+echo ------------------------------------------------------------
+set /p f1=Введите название раздела: 
+reg delete "hkcr\Folder\shellex\ContextMenuHandlers\\"%f1%"" /f
+del %f1%.reg
+goto a3
+
+
 :a8
 %color%
 cls
@@ -518,6 +525,7 @@ set /p name4=Введите название:
 set /p name5=Введите Команду:
 set name6=explorer %name5%
 echo ------------------------------------------------------------
+
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "Icon" /t reg_sz /d "%name2%"
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "Position" /t reg_sz /d "%name3%"
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "MUIVerb" /t reg_sz /d "%name4%"
@@ -574,15 +582,17 @@ cls
 title Удаление %tim%
 echo 1)Удалить обычное меню
 echo 2)Удалить раскрывающиеся меню
-echo 3)Помощь
-echo 4)Вернуться назад
-echo 5)Выход
+echo 3)Тест
+echo 4)Помощь
+echo 5)Вернуться назад
+echo 6)Выход
 choice /c "1234" /N>nul
 if %errorlevel%==1 (goto d1)
 if %errorlevel%==2 (goto d2)
-if %errorlevel%==3 (goto d3)
-if %errorlevel%==4 (goto menu)
-if %errorlevel%==5 (exit)
+if %errorlevel%==3 (goto dte)
+if %errorlevel%==4 (goto d3)
+if %errorlevel%==5 (goto menu)
+if %errorlevel%==6 (exit)
 :d3
 echo Ничего
 pause
