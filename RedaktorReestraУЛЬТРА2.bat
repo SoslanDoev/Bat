@@ -10,15 +10,23 @@ cd %appdata%
 mkdir RedaktorReestra
 cd RedaktorReestra
 if not exist "*.txt" (type nul > num.txt) 
-if not exist "*.sh" (
+mkdir PravMenu
+cd PravMenu
+if not exist "*.w" (
 (
-echo git init
-echo git add .
-echo git commit -m "first commit"
-echo git branch -M main
-echo git remote add origin https://github.com/USERNAME/REPOSITORIES
-echo git push -u origin main)>>git.sh
+echo Windows Registry Editor Version 5.00
+
+echo [HKEY_CLASSES_ROOT\CLSID\{09A47860-11B0-4DA5-AFA5-26D86198A780}]
+
+echo [HKEY_CLASSES_ROOT\CLSID\{09A47860-11B0-4DA5-AFA5-26D86198A780}\InprocServer32]
+echo @="C:\\Program Files\\Windows Defender\\shellext.dll"
+echo "ThreadingModel"="Apartment"
+
+echo [HKEY_CLASSES_ROOT\CLSID\{09A47860-11B0-4DA5-AFA5-26D86198A780}\Version]
+echo @="10.0.18362.1316"
+)>>WindDef.reg
 )
+cd ..
 mkdir ObMenu
 mkdir RaskrMenu
 cd RaskrMenu
@@ -43,17 +51,73 @@ cls
 title Редактор Реестра %tim%
 echo 1)Создать обычное меню
 echo 2)Создать раскрывающиеся меню
-echo 3)Удалить меню
-echo 4)Разное
-echo 5)Настройки
-echo 6)Выход
+echo 3)Тест
+echo 4)Удалить меню
+echo 5)Разное
+echo 6)Настройки
+echo 7)Выход
 choice /c "12345" /N>nul
 if %errorlevel%==1 (goto a1)
 if %errorlevel%==2 (goto a2)
-if %errorlevel%==3 (goto a3)
-if %errorlevel%==4 (goto a7)
-if %errorlevel%==5 (goto a8)
-if %errorlevel%==6 (exit)
+if %errorlevel%==3 (goto Prav)
+if %errorlevel%==4 (goto a3)
+if %errorlevel%==5 (goto a7)
+if %errorlevel%==6 (goto a8)
+if %errorlevel%==7 (exit)
+:Prav
+cls
+echo ------------------------------------------------------------
+cd %appdata%
+cd RedaktorReestra\PravMenu
+SetLocal EnableDelayedExpansion
+for %%a in ("%appdata%\RedaktorReestra\PravMenu\*.reg") do echo.%%~na
+echo ------------------------------------------------------------
+echo 1)WinRar
+echo 2)Отправить
+echo 3)Отправить2
+echo 4)WindowsDefender
+echo 5)Верунться назад
+choice /c "12345" /N>nul
+if %errorlevel%==1 (goto WinRar)
+if %errorlevel%==2 (goto Otpr)
+if %errorlevel%==3 (goto Otpr2)
+if %errorlevel%==4 (goto def)
+if %errorlevel%==5 (goto menu)
+:def 
+set nameewd=WindDef.reg
+cd %appdata%
+cd RedaktorReestra\PravMenu
+regedit /s WindDef.reg
+(
+echo %nameewd%
+)>>WindowsDefender.reg
+:Otpr2
+set nameeqq=ModernSharing2
+reg add "hkcr\AllFilesystemObjects\shellex\ContextMenuHandlers\\"%nameeqq%"" /t reg_sz /d "{7BA4C740-9E81-11CF-99D3-00AA004AE837}" /f
+cd %appdata%
+cd RedaktorReestra\PravMenu
+(
+echo %nameeqq%
+)>>Отправить2.reg
+:Otpr
+set nameeo=ModernSharing
+reg add "hkcr\*\shellex\ContextMenuHandlers\\"%nameeo%"" /t reg_sz /d "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}" /f
+cd %appdata%
+cd RedaktorReestra\PravMenu
+(
+echo %nameeo%
+)>>Отправить.reg
+goto Prav
+:WinRar
+title WinRar
+set nameek=WinRar
+reg add "hkcr\Folder\shellex\ContextMenuHandlers\\"%nameek%"" /t reg_sz /d "{B41DB860-64E4-11D2-9906-E49FADC173CA}" /f
+cd %appdata%
+cd RedaktorReestra\PravMenu
+(
+echo %nameek%
+)>>%nameek%.reg
+goto Prav
 :a8
 %color%
 cls
