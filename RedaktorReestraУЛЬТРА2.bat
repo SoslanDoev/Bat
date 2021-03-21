@@ -71,10 +71,10 @@ if %errorlevel%==5 (goto menu)
 set nameewd="09A47860-11B0-4DA5-AFA5-26D86198A780"
 cd %appdata%
 cd RedaktorReestra\PravMenu
-reg add "hkcr\CLSID\\"aq"" /t reg_sz /d "{09A47860-11B0-4DA5-AFA5-26D86198A780}" /f
-reg add "hkcr\CLSID\\"aq"\InprocServer32" /t reg_sz /d "Apartment" /f
-reg add "hkcr\CLSID\\"aq"\InprocServer32" /v "ThreadingMode" /t reg_sz /d "C:\Program Files\Windows Defender\shellext.dll" /f
-reg add "hkcr\CLSID\\"aq"\Version" /t reg_sz /d "10.0.18362.1316" /f
+reg add "hkcr\CLSID\\"{09A47860-11B0-4DA5-AFA5-26D86198A780}"" /t reg_sz /d "{09A47860-11B0-4DA5-AFA5-26D86198A780}" /f
+reg add "hkcr\CLSID\\"{09A47860-11B0-4DA5-AFA5-26D86198A780}"\InprocServer32" /t reg_sz /d "Apartment" /f
+reg add "hkcr\CLSID\\"{09A47860-11B0-4DA5-AFA5-26D86198A780}"\InprocServer32" /v "ThreadingMode" /t reg_sz /d "C:\Program Files\Windows Defender\shellext.dll" /f
+reg add "hkcr\CLSID\\"{09A47860-11B0-4DA5-AFA5-26D86198A780}"\Version" /t reg_sz /d "10.0.18362.1316" /f
 (
 echo %nameewd%
 )>>WindowsDefender.reg
