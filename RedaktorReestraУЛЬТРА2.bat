@@ -35,12 +35,12 @@ cls
 title Редактор Реестра %tim%
 echo 1)Создать обычное меню
 echo 2)Создать раскрывающиеся меню
-echo 3)Тест
+echo 3)Создать меню по файлу
 echo 4)Удалить меню
 echo 5)Разное
 echo 6)Настройки
 echo 7)Выход
-choice /c "12345" /N>nul
+choice /c "1234567" /N>nul
 if %errorlevel%==1 (goto a1)
 if %errorlevel%==2 (goto a2)
 if %errorlevel%==3 (goto Prav)
@@ -50,23 +50,31 @@ if %errorlevel%==6 (goto a8)
 if %errorlevel%==7 (exit)
 :Prav
 cls
+%color%
+echo 			Меню
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\PravMenu
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\PravMenu\*.reg") do echo.%%~na
+set dir="%appdata%\RedaktorReestra\PravMenu"
+set result=0
+if exist "%dir%" for /f "usebackq" %%f in (`dir "%dir%\" /b /a:`) do set result=1
+if %result%==0 (echo Ничего)
 echo ------------------------------------------------------------
-echo 1)WinRar
-echo 2)Отправить
-echo 3)Отправить2
-echo 4)WindowsDefender
+echo 1)Добавить WinRar
+echo 2)Добавить Отправить
+echo 3)Добавить Отправить2
+echo 4)Добавить WindowsDefender
 echo 5)Верунться назад
-choice /c "12345" /N>nul
+echo 6)Выход
+choice /c "123456" /N>nul
 if %errorlevel%==1 (goto WinRar)
 if %errorlevel%==2 (goto Otpr)
 if %errorlevel%==3 (goto Otpr2)
 if %errorlevel%==4 (goto def)
 if %errorlevel%==5 (goto menu)
+if %errorlevel%==6 (exit)
 :def 
 set nameewd="09A47860-11B0-4DA5-AFA5-26D86198A780"
 cd %appdata%
@@ -108,9 +116,8 @@ echo %nameek%
 )>>%nameek%.reg
 goto Prav
 :dte
-
-color 0c
 cls
+color 0c
 title Удаление %tim%
 echo 			Меню
 echo ------------------------------------------------------------
@@ -118,13 +125,40 @@ cd %appdata%
 cd RedaktorReestra\PravMenu
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\PravMenu\*.reg") do echo.%%~na
+set dir1="%appdata%\RedaktorReestra\PravMenu"
+set result=1
+if exist "%dir1%" for /f "usebackq" %%f in (`dir "%dir1%\" /b /a:`) do set result=11
+if %result%==1 (echo Ничего)
 echo ------------------------------------------------------------
-set /p f1=Введите название раздела: 
-reg delete "hkcr\Folder\shellex\ContextMenuHandlers\\"%f1%"" /f
-del %f1%.reg
-goto a3
-
-
+echo 1)Удалить WinRar
+echo 2)Удалить Отправить
+echo 3)Удалить Отправить2
+echo 4)Удалить WindowsDefender
+echo 5)Верунться назад
+echo 6)Выход
+choice /c "123456" /N>nul
+if %errorlevel%==1 (goto delWinRar)
+if %errorlevel%==2 (goto delOtpr)
+if %errorlevel%==3 (goto delOtpr2)
+if %errorlevel%==4 (goto deldef)
+if %errorlevel%==5 (goto menu)
+if %errorlevel%==6 (exit)
+:delWinRar 
+reg delete "hkcr\Folder\shellex\ContextMenuHandlers\\"WinRar"" /f
+del WinRar.reg
+goto dte
+:delOtpr
+reg delete "hkcr\*\shellex\ContextMenuHandlers\\"ModernSharing"" /f
+del Отправить.reg
+goto dte
+:delOtpr2
+reg delete "hkcr\AllFilesystemObjects\shellex\ContextMenuHandlers\\"ModernSharing2"" /f
+del Отправить2.reg
+goto dte
+:deldef
+reg delete "hkcr\CLSID\\"{09A47860-11B0-4DA5-AFA5-26D86198A780}"" /f
+del WindowsDefender.reg
+goto dte
 :a8
 %color%
 cls
@@ -137,6 +171,7 @@ echo 5)Черно-белый
 echo 6)Черно-светло-желтый
 echo 7)По умолчанию
 echo 8)Вернуться в меню
+echo 9)Выход
 choice /c "123456789" /N>nul
 if %errorlevel%==1 (
 cd %appdata%\RedaktorReestra
@@ -216,6 +251,7 @@ rename chewhi.txt poym.txt
 rename chewhiye.txt poym.txt
 rename num.txt poym.txt)
 if %errorlevel%==8 (goto menu)
+if %errorlevel%==9 (exit)
 goto a8
 :a7
 %color%
@@ -260,6 +296,10 @@ cd %appdata%
 cd RedaktorReestra\ObMenu
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\ObMenu\*.reg") do echo.%%~na
+set dir2="%appdata%\RedaktorReestra\ObMenu"
+set result=10
+if exist "%dir2%" for /f "usebackq" %%f in (`dir "%dir2%\" /b /a:`) do set result=1
+if %result%==10 (echo Ничего)
 echo ------------------------------------------------------------
 echo 1)Создать обычное меню
 echo 2)Готовые
@@ -301,7 +341,6 @@ if %bwrq%==8 (goto calcoec)
 if %bwrq%==9 (goto menu)
 if %bwrq%==a (goto pan)
 if %bwrq%==b (goto sv)
-
 :kor 
 title Корзина %tim%
 set kor=Корзина
@@ -512,7 +551,6 @@ echo %sv3%
 echo %sv4%
 )>>%sv%.reg
 goto uy2
-
 :uy1
 %color%
 cls
@@ -525,7 +563,6 @@ set /p name4=Введите название:
 set /p name5=Введите Команду:
 set name6=explorer %name5%
 echo ------------------------------------------------------------
-
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "Icon" /t reg_sz /d "%name2%"
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "Position" /t reg_sz /d "%name3%"
 reg add "hkcr\directory\background\shell\\"%name1%"" /v "MUIVerb" /t reg_sz /d "%name4%"
@@ -560,12 +597,20 @@ cd %appdata%
 cd RedaktorReestra\RaskrMenu\Command
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
+set dir44="%appdata%\RedaktorReestra\RaskrMenu\Command"
+set result=50
+if exist "%dir44%" for /f "usebackq" %%f in (`dir "%dir44%\" /b /a:`) do set result=1
+if %result%==50 (echo Ничего)
 echo 			Раздел
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\RaskrMenu\Razdel
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Razdel\*.reg") do echo.%%~na
+set dir444="%appdata%\RedaktorReestra\RaskrMenu\Razdel"
+set result=420
+if exist "%dir444%" for /f "usebackq" %%f in (`dir "%dir444%\" /b /a:`) do set result=1
+if %result%==420 (echo Ничего)
 echo ------------------------------------------------------------
 echo 1)Создать команду
 echo 2)Создать раздел
@@ -582,20 +627,15 @@ cls
 title Удаление %tim%
 echo 1)Удалить обычное меню
 echo 2)Удалить раскрывающиеся меню
-echo 3)Тест
-echo 4)Помощь
-echo 5)Вернуться назад
-echo 6)Выход
-choice /c "1234" /N>nul
+echo 3)Удалить меню по файлу
+echo 4)Вернуться назад
+echo 5)Выход
+choice /c "12345" /N>nul
 if %errorlevel%==1 (goto d1)
 if %errorlevel%==2 (goto d2)
 if %errorlevel%==3 (goto dte)
-if %errorlevel%==4 (goto d3)
-if %errorlevel%==5 (goto menu)
-if %errorlevel%==6 (exit)
-:d3
-echo Ничего
-pause
+if %errorlevel%==4 (goto menu)
+if %errorlevel%==5 (exit)
 goto a3
 :d1
 color 0c
@@ -607,6 +647,10 @@ cd %appdata%
 cd RedaktorReestra\ObMenu
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\ObMenu\*.reg") do echo.%%~na
+set dir312="%appdata%\RedaktorReestra\ObMenu"
+set result=3320
+if exist "%dir312%" for /f "usebackq" %%f in (`dir "%dir312%\" /b /a:`) do set result=1
+if %result%==3320 (echo Ничего)
 echo ------------------------------------------------------------
 ::reg query hkcr\directory\background\shell\
 set /p f1=Введите название раздела: 
@@ -623,12 +667,20 @@ cd %appdata%
 cd RedaktorReestra\RaskrMenu\Command
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
+set dir53551="%appdata%\RedaktorReestra\RaskrMenu\Command"
+set result=5650
+if exist "%dir53551%" for /f "usebackq" %%f in (`dir "%dir53551%\" /b /a:`) do set result=1
+if %result%==5650 (echo Ничего)
 echo 			Раздел
 echo ------------------------------------------------------------
 cd %appdata%
 cd RedaktorReestra\RaskrMenu\Razdel
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Razdel\*.reg") do echo.%%~na
+set dir33411="%appdata%\RedaktorReestra\RaskrMenu\Razdel"
+set result=4980
+if exist "%dir33411%" for /f "usebackq" %%f in (`dir "%dir33411%\" /b /a:`) do set result=1
+if %result%==4980 (echo Ничего)
 echo ------------------------------------------------------------
 echo 1)Удалить команду
 echo 2)Удалить раздел
@@ -649,6 +701,10 @@ cd %appdata%
 cd RedaktorReestra\RaskrMenu\Command
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
+set dir1745="%appdata%\RedaktorReestra\RaskrMenu\Command"
+set result=12110
+if exist "%dir1745%" for /f "usebackq" %%f in (`dir "%dir1745%\" /b /a:`) do set result=1
+if %result%==12110 (echo Ничего)
 echo ------------------------------------------------------------
 ::reg query hklm\software\microsoft\windows\currentversion\explorer\commandstore\shell
 set /p f2=Введите название раздела: 
@@ -665,6 +721,10 @@ cd %appdata%
 cd RedaktorReestra\RaskrMenu\Razdel
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Razdel\*.reg") do echo.%%~na
+set dir99685="%appdata%\RedaktorReestra\RaskrMenu\Razdel"
+set result=7790
+if exist "%dir99685%" for /f "usebackq" %%f in (`dir "%dir99685%\" /b /a:`) do set result=1
+if %result%==7790 (echo Ничего)
 echo ------------------------------------------------------------
 set /p f2=Введите название раздела: 
 reg delete "hkcr\directory\background\shell\\"%f2%"" /f
@@ -680,6 +740,10 @@ cd %appdata%
 cd RedaktorReestra\RaskrMenu\Command
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
+set dir309912="%appdata%\RedaktorReestra\RaskrMenu\Command"
+set result=24180
+if exist "%dir309912%" for /f "usebackq" %%f in (`dir "%dir309912%\" /b /a:`) do set result=1
+if %result%==24180 (echo Ничего)
 echo ------------------------------------------------------------
 set /p name0=Введите имя раздела: 
 set /p name01=Введите расположение иконки: 
@@ -717,10 +781,18 @@ echo 			Меню
 echo ------------------------------------------------------------
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Command\*.reg") do echo.%%~na
+set dir8690="%appdata%\RedaktorReestra\RaskrMenu\Command"
+set result=89700
+if exist "%dir8690%" for /f "usebackq" %%f in (`dir "%dir8690%\" /b /a:`) do set result=1
+if %result%==89700 (echo Ничего)
 echo 			Раздел
 echo ------------------------------------------------------------
 SetLocal EnableDelayedExpansion
 for %%a in ("%appdata%\RedaktorReestra\RaskrMenu\Razdel\*.reg") do echo.%%~na
+set dir521902="%appdata%\RedaktorReestra\RaskrMenu\Razdel"
+set result=2209900
+if exist "%dir521902%" for /f "usebackq" %%f in (`dir "%dir521902%\" /b /a:`) do set result=1
+if %result%==2209900 (echo Ничего)
 echo ------------------------------------------------------------
 set /p name1=Введите название раздела: 
 set /p name2=Введите расположение иконки: 
